@@ -1,0 +1,37 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  email         String    @unique
+  auth0Id       String    @unique
+  name          String?
+  profilePicture String?
+  
+  // Subscription and billing
+  stripeCustomerId String?  @unique
+  subscription     Subscription?
+}
+
+model Subscription {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeSubscriptionId String  @unique
+  status          String    // active, canceled, past_due, etc.
+  priceId         String    // Stripe price ID
+  planName        String    // friendly name: "Basic", "Pro", etc.
+  interval        String    // "month" or "year"
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  currentPeriodEnd DateTime
+}
