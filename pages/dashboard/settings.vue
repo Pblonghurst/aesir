@@ -1,8 +1,6 @@
 <template lang="">
-    <div>
-        <h1>Settings</h1>
-    </div>
+  <div>
+    <h1>Settings</h1>
+  </div>
 </template>
-<script setup>
-
-</script>
+<script setup></script>

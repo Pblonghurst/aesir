@@ -25,5 +25,5 @@
 </template>
 
 <script setup>
-    import PricingCard from '../ui/card/Pricing.vue'
+import PricingCard from '../ui/card/Pricing.vue';
 </script>

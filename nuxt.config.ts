@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // imports
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
 // config
 export default defineNuxtConfig({
@@ -8,17 +8,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/icon',
-    '@nuxt/fonts',
-    '@nuxt/image',
-    '@nuxtjs/supabase',
-  ],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/fonts', '@nuxt/image', '@nuxtjs/supabase'],
 
   // Runtime config for environment variables
   runtimeConfig: {
@@ -33,8 +25,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/',
       callback: '/dashboard',
-      exclude: ['/']
-    }
-  }
-  
-})
+      exclude: ['/'],
+    },
+  },
+});

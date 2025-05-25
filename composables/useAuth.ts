@@ -1,124 +1,128 @@
 // composables/useAuth.ts
 export const useAuth = () => {
-  const supabase = useSupabaseClient()
-  const user = useSupabaseUser()
-  
-  // Reactive state for UI feedback
-  const loading = ref(false)
-  const message = ref('')
-  const messageType = ref<'success' | 'error'>('success')
+  const supabase = useSupabaseClient();
+  const user = useSupabaseUser();
 
-  // handle login 
+  // Reactive state for UI feedback
+  const loading = ref(false);
+  const message = ref('');
+  const messageType = ref<'success' | 'error'>('success');
+
+  // handle login
   const handleLogin = async (email: string, password: string, redirectTo?: string) => {
-    loading.value = true
-    message.value = ''
-    
+    loading.value = true;
+    message.value = '';
+
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password
-      })
-      
+        password,
+      });
+
       if (error) {
-        message.value = error.message
-        messageType.value = 'error'
-        return { success: false, error: error.message }
+        message.value = error.message;
+        messageType.value = 'error';
+        return { success: false, error: error.message };
       } else {
         if (redirectTo) {
-          await navigateTo(redirectTo)
+          await navigateTo(redirectTo);
         }
-        return { success: true }
+        return { success: true };
       }
     } catch (err: any) {
-      const errorMessage = 'An unexpected error occurred'
-      message.value = errorMessage
-      messageType.value = 'error'
-      return { success: false, error: errorMessage }
+      const errorMessage = 'An unexpected error occurred';
+      message.value = errorMessage;
+      messageType.value = 'error';
+      return { success: false, error: errorMessage };
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
-// handle sign up
-  const handleSignUp = async (email: string, password: string, options?: {
-    redirectTo?: string
-    metadata?: Record<string, any>
-  }) => {
-    loading.value = true
-    message.value = ''
-    
+  // handle sign up
+  const handleSignUp = async (
+    email: string,
+    password: string,
+    options?: {
+      redirectTo?: string;
+      metadata?: Record<string, any>;
+    }
+  ) => {
+    loading.value = true;
+    message.value = '';
+
     try {
       const { error, data } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: options?.metadata || {}
-        }
-      })
-      
+          data: options?.metadata || {},
+        },
+      });
+
       if (error) {
-        message.value = error.message
-        messageType.value = 'error'
-        return { success: false, error: error.message }
+        message.value = error.message;
+        messageType.value = 'error';
+        return { success: false, error: error.message };
       } else {
-        message.value = 'Check your email for verification link!'
-        messageType.value = 'success'
-        return { success: true, data }
+        message.value = 'Check your email for verification link!';
+        messageType.value = 'success';
+        return { success: true, data };
       }
     } catch (err: any) {
-      const errorMessage = 'An unexpected error occurred'
-      message.value = errorMessage
-      messageType.value = 'error'
-      return { success: false, error: errorMessage }
+      const errorMessage = 'An unexpected error occurred';
+      message.value = errorMessage;
+      messageType.value = 'error';
+      return { success: false, error: errorMessage };
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
-  // handle sign out 
+  // handle sign out
   const handleSignOut = async (redirectTo?: string) => {
-    loading.value = true
-    
+    loading.value = true;
+
     try {
-      const { error } = await supabase.auth.signOut()
-      
+      const { error } = await supabase.auth.signOut();
+
       if (error) {
-        message.value = error.message
-        messageType.value = 'error'
-        return { success: false, error: error.message }
+        message.value = error.message;
+        messageType.value = 'error';
+        return { success: false, error: error.message };
       } else {
         if (redirectTo) {
-          await navigateTo(redirectTo)
+          await navigateTo(redirectTo);
         }
-        return { success: true }
+        return { success: true };
       }
     } catch (err: any) {
-      const errorMessage = 'An unexpected error occurred'
-      message.value = errorMessage
-      messageType.value = 'error'
-      return { success: false, error: errorMessage }
+      const errorMessage = 'An unexpected error occurred';
+      message.value = errorMessage;
+      messageType.value = 'error';
+      return { success: false, error: errorMessage };
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const clearMessage = () => {
-    message.value = ''
-  }
+    message.value = '';
+  };
 
   // Check if user is authenticated
-  const isAuthenticated = computed(() => !!user.value)
-  
+  const isAuthenticated = computed(() => !!user.value);
+
   // Get user profile data
   const getUserProfile = computed(() => {
-    if (!user.value) return null
+    if (!user.value) return null;
     return {
       id: user.value.id,
       email: user.value.email,
       metadata: user.value.user_metadata,
-      createdAt: user.value.created_at
-    }
-  })
+      createdAt: user.value.created_at,
+    };
+  });
 
   return {
     // State
@@ -128,11 +132,11 @@ export const useAuth = () => {
     messageType: readonly(messageType),
     isAuthenticated,
     getUserProfile,
-    
+
     // Methods
     handleLogin,
     handleSignUp,
     handleSignOut,
-    clearMessage
-  }
-}
+    clearMessage,
+  };
+};

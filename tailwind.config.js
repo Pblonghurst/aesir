@@ -1,11 +1,11 @@
 export default {
   content: [
-    "./components/**/*.{js,vue,ts}",
-    "./layouts/**/*.vue",
-    "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
-    "./app.vue",
-    "./error.vue",
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './app.vue',
+    './error.vue',
   ],
   theme: {
     extend: {
@@ -23,11 +23,8 @@ export default {
           900: '#0c4a6e',
           950: '#082f49',
         },
-      }
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-  ],
-}
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+};

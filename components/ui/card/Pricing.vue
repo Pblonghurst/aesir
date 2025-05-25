@@ -7,7 +7,9 @@
         <li v-for="(feature, index) in features" :key="index">• {{ feature }}</li>
       </ul>
     </div>
-    <button class="mt-auto bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition">
+    <button
+      class="mt-auto bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition"
+    >
       {{ buttonLabel }}
     </button>
   </div>
@@ -18,6 +20,6 @@ defineProps({
   title: String,
   price: String,
   features: Array,
-  buttonLabel: String
-})
+  buttonLabel: String,
+});
 </script>
