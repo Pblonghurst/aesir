@@ -23,6 +23,16 @@ export default {
           900: '#0c4a6e',
           950: '#082f49',
         },
+        text: {
+          light: '#ffffff',
+          DEFAULT: '#1e293b', // slate-800 as default
+          dark: '#00aaff', // slate-900
+        },
+        background: {
+          light: '#f8fafc', // slate-50
+          DEFAULT: '#ffffff',
+          dark: '#1e293b', // slate-800
+        },
       },
     },
   },

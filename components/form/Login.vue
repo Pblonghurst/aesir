@@ -19,7 +19,12 @@
     </div>
 
     <!-- Login Form -->
-    <form v-if="activeTab === 'login'" @submit.prevent="onLogin" class="space-y-4">
+    <form
+      v-if="activeTab === 'login'"
+      @submit.prevent="onLogin"
+      class="space-y-4"
+      autocomplete="on"
+    >
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input
@@ -28,6 +33,7 @@
           required
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your email"
+          autocomplete="email"
         />
       </div>
       <div>
@@ -38,6 +44,7 @@
           required
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your password"
+          autocomplete="current-password"
         />
       </div>
       <button
@@ -50,7 +57,12 @@
     </form>
 
     <!-- Signup Form -->
-    <form v-if="activeTab === 'signup'" @submit.prevent="onSignUp" class="space-y-4">
+    <form
+      v-if="activeTab === 'signup'"
+      @submit.prevent="onSignUp"
+      class="space-y-4"
+      autocomplete="on"
+    >
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input
@@ -59,6 +71,7 @@
           required
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your email"
+          autocomplete="email"
         />
       </div>
       <div>
@@ -70,6 +83,7 @@
           minlength="6"
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Create a password (min 6 characters)"
+          autocomplete="new-password"
         />
       </div>
       <button
