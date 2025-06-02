@@ -8,6 +8,7 @@
     </div>
 
     <!-- Content Sections -->
+    <Button>Settings</Button>
   </main>
 </template>
 

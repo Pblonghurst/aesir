@@ -21,16 +21,16 @@ export default defineNuxtConfig({
 
   // shadcn
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: './components/ui',
   },
+  components: [
+    {
+      path: '~/components', // auto-import any .vue under components/ui
+      extensions: ['vue'],
+      pathPrefix: false, // so that nested folders don’t become part of the name
+    },
+  ],
 
   // Runtime config for environment variables
   runtimeConfig: {
