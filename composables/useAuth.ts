@@ -7,6 +7,44 @@ export const useAuth = () => {
   const loading = ref(false);
   const message = ref('');
   const messageType = ref<'success' | 'error'>('success');
+  const profile = ref<any>(null);
+
+  // Fetch user profile
+  const fetchProfile = async () => {
+    if (!user.value) return null;
+
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.value.id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
+      }
+
+      profile.value = data;
+      return data;
+    } catch (err) {
+      console.error('Error fetching profile:', err);
+      return null;
+    }
+  };
+
+  // Watch for user changes and fetch profile
+  watch(
+    user,
+    async (newUser) => {
+      if (newUser) {
+        await fetchProfile();
+      } else {
+        profile.value = null;
+      }
+    },
+    { immediate: true }
+  );
 
   // handle login
   const handleLogin = async (email: string, password: string, redirectTo?: string) => {
@@ -52,12 +90,10 @@ export const useAuth = () => {
     message.value = '';
 
     try {
+      // Try basic signup without metadata first
       const { error, data } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: options?.metadata || {},
-        },
       });
 
       if (error) {
@@ -121,12 +157,14 @@ export const useAuth = () => {
       email: user.value.email,
       metadata: user.value.user_metadata,
       createdAt: user.value.created_at,
+      profile: profile.value,
     };
   });
 
   return {
     // State
     user,
+    profile: readonly(profile),
     loading: readonly(loading),
     message: readonly(message),
     messageType: readonly(messageType),
@@ -138,5 +176,6 @@ export const useAuth = () => {
     handleSignUp,
     handleSignOut,
     clearMessage,
+    fetchProfile,
   };
 };

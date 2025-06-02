@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-800">
     <HeaderLanding />
     <slot />
-    <FooterLanding />
+    <Footer />
   </div>
 </template>
 

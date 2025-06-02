@@ -16,8 +16,7 @@
   </nav>
 </template>
 <script setup>
-const { handleSignOut } = useAuth();
-
+const { user, handleSignOut } = useAuth();
 const onSignOut = async () => {
   await handleSignOut('/');
 };

@@ -28,7 +28,6 @@
     </div>
 
     <!-- pricing cards -->
-    <!-- <SectionPricing /> -->
   </div>
 </template>
 
