@@ -4,11 +4,9 @@
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-8">
           <h1 class="text-2xl font-bold text-white">Dashboard</h1>
-          <!-- <nav class="flex gap-6">
-            <a href="#" class="text-blue-600 font-medium">Overview</a>
-            <a href="#" class="text-gray-600  hover:text-gray-900">Analytics</a>
-            <a href="/dashboard/settings" class="text-gray-600 hover:text-gray-900">Settings</a>
-          </nav> -->
+          <nav class="flex gap-6">
+            <NuxtLink to="/" class="text-white hover:text-gray-400">Home</NuxtLink>
+          </nav>
         </div>
         <div class="flex items-center gap-4">
           <!-- User Info Section -->
@@ -67,24 +65,29 @@
                       Make changes to your profile here. Click save when you're done.
                     </DialogDescription>
                   </DialogHeader>
+
                   <!-- update profile Form -->
                   <Label for="avatar">Avatar</Label>
                   <Input type="file" :placeholder="profile.avatar" />
 
                   <Label for="email">Email</Label>
-                  <Input type="email" v-model="user.email" />
+                  <Input type="email" :model-value="user.email" disabled />
 
                   <Label for="username">Username</Label>
-                  <Input type="text" v-model="profile.username" />
+                  <Input type="text" v-model="formData.username" />
 
                   <Label for="first_name">First Name</Label>
-                  <Input type="text" v-model="profile.first_name" />
+                  <Input type="text" v-model="formData.first_name" />
 
                   <Label for="last_name">Last Name</Label>
-                  <Input type="text" v-model="profile.last_name" />
+                  <Input type="text" v-model="formData.last_name" />
 
                   <DialogFooter>
-                    <Button @click="changeUsername">Save Changes</Button>
+                    <Button @click="updateProfile" :disabled="isLoading || saveStatus">
+                      <span v-if="isLoading">Saving...</span>
+                      <span v-else-if="saveStatus">Saved</span>
+                      <span v-else>Save Changes</span>
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -98,32 +101,59 @@
 
 <script setup>
 const { user, handleSignOut, profile } = useAuth();
-const newUsername = ref('newUsername');
+const isLoading = ref(false);
+const saveStatus = ref(false);
+const formData = reactive({
+  username: '',
+  first_name: '',
+  last_name: '',
+});
 
-async function changeUsername() {
-  if (!user.value) {
-    alert('Not signed in');
-    return;
-  }
+watch(
+  () => profile.value,
+  (newProfile) => {
+    if (newProfile) {
+      formData.username = newProfile.username;
+      formData.first_name = newProfile.first_name;
+      formData.last_name = newProfile.last_name;
+    }
+  },
+  { immediate: true }
+);
 
-  // Send { username: "theNewValue" } to /api/auth/profile
-  const response = await $fetch(`/api/auth/profiles/${user.value.id}`, {
-    method: 'PUT',
-    body: { username: newUsername.value },
-  });
-
-  if (response.success) {
-    console.log('Profile was updated', response.profile);
-    // Optionally, update local state or show a success message
-  } else {
-    console.error('Update failed', response);
+async function updateProfile() {
+  isLoading.value = true;
+  saveStatus.value = false;
+  try {
+    const response = await $fetch(`/api/auth/profiles/${user.value.id}`, {
+      method: 'PUT',
+      body: {
+        username: formData.username,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+      },
+    });
+    if (response.success) {
+      console.log('Profile was updated', response.profile);
+      // Show success feedback
+      saveStatus.value = true;
+      setTimeout(() => {
+        saveStatus.value = false;
+      }, 1000);
+    } else {
+      console.error('Update failed', response);
+    }
+  } catch (error) {
+    console.error('Update error:', error);
+  } finally {
+    isLoading.value = false;
   }
 }
 
 const onSignOut = async () => {
   await handleSignOut('/');
 };
-console.log(profile);
+
 // get initials from email
 const initial = computed(() => {
   return user.value?.email?.charAt(0).toUpperCase() || '';

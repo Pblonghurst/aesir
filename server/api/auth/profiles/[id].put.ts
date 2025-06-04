@@ -1,10 +1,11 @@
 // server/api/profiles/[id].put.ts
 import { serverSupabaseClient } from '#supabase/server';
 import { defineEventHandler, readBody, sendError, createError } from 'h3';
+import type { Database } from '~/types/db-profiles';
 
 export default defineEventHandler(async (event) => {
   // 1) Create a server‐side Supabase client with service_role key
-  const supabase = await serverSupabaseClient(event);
+  const supabase = await serverSupabaseClient<Database>(event);
 
   // 2) Get the currently authenticated user (via the cookie/jwt)
   const {
@@ -31,6 +32,8 @@ export default defineEventHandler(async (event) => {
   //    Expect something like: { username: "newName", bio?: "...", avatar_url?: "..." }
   const payload = (await readBody(event)) as {
     username?: string;
+    first_name?: string;
+    last_name?: string;
   };
 
   // 5) Validate that at least one updatable field is present
@@ -43,6 +46,8 @@ export default defineEventHandler(async (event) => {
     .from('profiles')
     .update({
       username: payload.username,
+      first_name: payload.first_name,
+      last_name: payload.last_name,
     })
     .eq('id', id)
     .select()
