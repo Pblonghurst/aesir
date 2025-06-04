@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-7xl mx-auto px-6 py-20">
     <!-- Hero Section -->
-    <SectionHeroLanding />
+    <HeroLanding />
 
     <!-- Sign in/up form -->
-    <FormLogin />
+    <Login />
 
     <!-- Logged in state -->
     <div v-if="user" class="text-center">

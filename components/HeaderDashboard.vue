@@ -16,7 +16,7 @@
             <!-- User Details -->
             <div class="text-right">
               <div class="text-sm font-medium text-white">
-                {{ profile?.username || user?.email }}
+                {{ profile?.username }}
               </div>
               <div class="text-xs text-gray-400">
                 {{ user?.email }}
@@ -24,22 +24,75 @@
             </div>
             <!-- Avatar with Popup -->
             <div class="relative">
-              <button
-                @click="togglePopup"
-                class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-green-400 focus:outline-none focus:ring-2 focus:ring-green-400"
-              >
-                <img
-                  v-if="user?.avatar"
-                  :src="user.avatar"
-                  :alt="user?.email"
-                  class="w-full h-full object-cover"
-                />
-                <span v-else class="text-white font-medium text-sm">
-                  {{ initial }}
-                </span>
-              </button>
+              <Dialog>
+                <DropdownMenu>
+                  <!-- dropdown menu trigger -->
+                  <DropdownMenuTrigger>
+                    <button
+                      class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-green-400 focus:outline-none"
+                    >
+                      <img
+                        v-if="user?.avatar"
+                        :src="user.avatar"
+                        :alt="user?.email"
+                        class="w-full h-full object-cover"
+                      />
+                      <span v-else class="text-white font-medium text-sm">
+                        {{ initial }}
+                      </span>
+                    </button>
+                  </DropdownMenuTrigger>
 
-              <!-- Settings Popup -->
+                  <!-- dropdown menu -->
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel class="flex items-center justify-between px-2 py-1 gap-2">
+                      <span class="text-black">Dark Mode</span>
+                      <Switch id="theme-toggle" />
+                    </DropdownMenuLabel>
+                    <DialogTrigger as-child>
+                      <DropdownMenuItem class="cursor-pointer"> Edit Profile </DropdownMenuItem>
+                    </DialogTrigger>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem @click="onSignOut" class="cursor-pointer">
+                      <span>Sign Out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogDescription>
+                      Make changes to your profile here. Click save when you're done.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <!-- Login Form -->
+                  <form class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                      <input
+                        type="text"
+                        required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter your first name"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                      <input
+                        type="text"
+                        required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter your last name"
+                      />
+                    </div>
+                  </form>
+                  <DialogFooter>
+                    <Button>Save Changes</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
