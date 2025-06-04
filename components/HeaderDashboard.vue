@@ -62,34 +62,29 @@
                 </DropdownMenu>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogTitle>My Profile</DialogTitle>
                     <DialogDescription>
                       Make changes to your profile here. Click save when you're done.
                     </DialogDescription>
                   </DialogHeader>
-                  <!-- Login Form -->
-                  <form class="space-y-4">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                      <input
-                        type="text"
-                        required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter your first name"
-                      />
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                      <input
-                        type="text"
-                        required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter your last name"
-                      />
-                    </div>
-                  </form>
+                  <!-- update profile Form -->
+                  <Label for="avatar">Avatar</Label>
+                  <Input type="file" :placeholder="profile.avatar" />
+
+                  <Label for="email">Email</Label>
+                  <Input type="email" v-model="user.email" />
+
+                  <Label for="username">Username</Label>
+                  <Input type="text" v-model="profile.username" />
+
+                  <Label for="first_name">First Name</Label>
+                  <Input type="text" v-model="profile.first_name" />
+
+                  <Label for="last_name">Last Name</Label>
+                  <Input type="text" v-model="profile.last_name" />
+
                   <DialogFooter>
-                    <Button>Save Changes</Button>
+                    <Button @click="changeUsername">Save Changes</Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -103,6 +98,27 @@
 
 <script setup>
 const { user, handleSignOut, profile } = useAuth();
+const newUsername = ref('newUsername');
+
+async function changeUsername() {
+  if (!user.value) {
+    alert('Not signed in');
+    return;
+  }
+
+  // Send { username: "theNewValue" } to /api/auth/profile
+  const response = await $fetch(`/api/auth/profiles/${user.value.id}`, {
+    method: 'PUT',
+    body: { username: newUsername.value },
+  });
+
+  if (response.success) {
+    console.log('Profile was updated', response.profile);
+    // Optionally, update local state or show a success message
+  } else {
+    console.error('Update failed', response);
+  }
+}
 
 const onSignOut = async () => {
   await handleSignOut('/');

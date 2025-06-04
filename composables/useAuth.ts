@@ -149,18 +149,6 @@ export const useAuth = () => {
   // Check if user is authenticated
   const isAuthenticated = computed(() => !!user.value);
 
-  // Get user profile data
-  const getUserProfile = computed(() => {
-    if (!user.value) return null;
-    return {
-      id: user.value.id,
-      email: user.value.email,
-      metadata: user.value.user_metadata,
-      createdAt: user.value.created_at,
-      profile: profile.value,
-    };
-  });
-
   return {
     // State
     user,
@@ -169,7 +157,6 @@ export const useAuth = () => {
     message: readonly(message),
     messageType: readonly(messageType),
     isAuthenticated,
-    getUserProfile,
 
     // Methods
     handleLogin,
