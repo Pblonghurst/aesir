@@ -12,13 +12,16 @@
           <!-- User Info Section -->
           <div class="flex items-center gap-3">
             <!-- User Details -->
-            <div class="text-right">
-              <div class="text-sm font-medium text-white">
+            <div class="text-right flex items-end flex-col gap-1">
+              <Skeleton v-if="!profile" class="h-4 w-[100px]" />
+              <div v-else class="text-sm font-medium text-white">
                 {{ profile?.username }}
               </div>
-              <div class="text-xs text-gray-400">
+              <Skeleton v-if="!profile" class="h-4 w-[150px]" />
+              <div v-else class="text-xs text-gray-400">
                 {{ user?.email }}
               </div>
+              <div class="flex items-center space-x-4"></div>
             </div>
             <!-- Avatar with Popup -->
             <div class="relative">
@@ -26,13 +29,15 @@
                 <DropdownMenu>
                   <!-- dropdown menu trigger -->
                   <DropdownMenuTrigger>
+                    <Skeleton v-if="!profile" class="h-12 w-12 rounded-full" />
                     <button
+                      v-else
                       class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-green-400 focus:outline-none"
                     >
                       <img
-                        v-if="user?.avatar"
-                        :src="user.avatar"
-                        :alt="user?.email"
+                        v-if="profile?.avatar"
+                        :src="profile.avatar"
+                        :alt="profile?.email"
                         class="w-full h-full object-cover"
                       />
                       <span v-else class="text-white font-medium text-sm">
@@ -83,6 +88,7 @@
                   <Input type="text" v-model="formData.last_name" />
 
                   <DialogFooter>
+                    <!-- save button -->
                     <Button @click="updateProfile" :disabled="isLoading || saveStatus">
                       <span v-if="isLoading">Saving...</span>
                       <span v-else-if="saveStatus">Saved</span>
@@ -103,12 +109,15 @@
 const { user, handleSignOut, profile } = useAuth();
 const isLoading = ref(false);
 const saveStatus = ref(false);
+
+// form data
 const formData = reactive({
   username: '',
   first_name: '',
   last_name: '',
 });
 
+// watch profile
 watch(
   () => profile.value,
   (newProfile) => {
@@ -121,6 +130,7 @@ watch(
   { immediate: true }
 );
 
+// update profile
 async function updateProfile() {
   isLoading.value = true;
   saveStatus.value = false;
@@ -150,6 +160,7 @@ async function updateProfile() {
   }
 }
 
+// sign out
 const onSignOut = async () => {
   await handleSignOut('/');
 };

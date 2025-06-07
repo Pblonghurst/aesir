@@ -1,99 +1,127 @@
 <template lang="">
   <!-- Auth Forms -->
   <div v-if="!user" class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
-    <div class="flex mb-6">
-      <button
-        @click="activeTab = 'login'"
-        :class="activeTab === 'login' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'"
-        class="flex-1 py-2 px-4 rounded-l-lg font-medium transition-colors"
-      >
-        Login
-      </button>
-      <button
-        @click="activeTab = 'signup'"
-        :class="activeTab === 'signup' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'"
-        class="flex-1 py-2 px-4 rounded-r-lg font-medium transition-colors"
-      >
-        Sign Up
-      </button>
-    </div>
+    <Tabs v-model="activeTab" class="w-full">
+      <!-- tabs list -->
+      <TabsList class="grid w-full grid-cols-2">
+        <TabsTrigger value="login">Login</TabsTrigger>
+        <TabsTrigger value="signup">Sign Up</TabsTrigger>
+      </TabsList>
 
-    <!-- Login Form -->
-    <form
-      v-if="activeTab === 'login'"
-      @submit.prevent="onLogin"
-      class="space-y-4"
-      autocomplete="on"
-    >
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-        <input
-          v-model="loginForm.email"
-          type="email"
-          required
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your email"
-          autocomplete="email"
-        />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input
-          v-model="loginForm.password"
-          type="password"
-          required
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your password"
-          autocomplete="current-password"
-        />
-      </div>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-      >
-        {{ loading ? 'Signing in...' : 'Sign In' }}
-      </button>
-    </form>
+      <!-- login tab -->
+      <TabsContent value="login">
+        <Card>
+          <CardHeader>
+            <div class="mb-6">
+              <CardDescription> Sign in to your account to continue. </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form @submit.prevent="onLogin" class="space-y-4" autocomplete="on">
+              <div class="space-y-1">
+                <Label for="login-email">Email</Label>
+                <Input
+                  id="login-email"
+                  v-model="loginForm.email"
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="space-y-1">
+                <Label for="login-password">Password</Label>
+                <Input
+                  id="login-password"
+                  v-model="loginForm.password"
+                  type="password"
+                  required
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                />
+              </div>
+              <Button type="submit" :disabled="loading" class="w-full mt-4">
+                {{ loading ? 'Signing in...' : 'Sign In' }}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </TabsContent>
 
-    <!-- Signup Form -->
-    <form
-      v-if="activeTab === 'signup'"
-      @submit.prevent="onSignUp"
-      class="space-y-4"
-      autocomplete="on"
-    >
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-        <input
-          v-model="signupForm.email"
-          type="email"
-          required
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your email"
-          autocomplete="email"
-        />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input
-          v-model="signupForm.password"
-          type="password"
-          required
-          minlength="6"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Create a password (min 6 characters)"
-          autocomplete="new-password"
-        />
-      </div>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
-      >
-        {{ loading ? 'Creating account...' : 'Create Account' }}
-      </button>
-    </form>
+      <!-- signup tab -->
+      <TabsContent value="signup">
+        <Card>
+          <CardHeader>
+            <div class="mb-6">
+              <CardDescription> Create a new account to get started. </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form @submit.prevent="onSignUp" class="space-y-4" autocomplete="on">
+              <div class="space-y-1">
+                <Label for="signup-email">Email</Label>
+                <Input
+                  id="signup-email"
+                  v-model="signupForm.email"
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="space-y-1">
+                <Label for="signup-password">Password</Label>
+                <Input
+                  id="signup-password"
+                  v-model="signupForm.password"
+                  type="password"
+                  required
+                  minlength="6"
+                  placeholder="Create a password (min 6 characters)"
+                  autocomplete="new-password"
+                />
+              </div>
+              <div class="space-y-1">
+                <Label for="signup-username">Username</Label>
+                <Input
+                  id="signup-username"
+                  v-model="signupForm.username"
+                  type="text"
+                  required
+                  placeholder="Enter your username"
+                  autocomplete="username"
+                />
+              </div>
+              <div class="space-y-1">
+                <Label for="signup-first-name">First Name</Label>
+                <Input
+                  id="signup-first-name"
+                  v-model="signupForm.first_name"
+                  type="text"
+                  required
+                  placeholder="Enter your first name"
+                  autocomplete="first-name"
+                />
+              </div>
+              <div class="space-y-1">
+                <Label for="signup-last-name">Last Name</Label>
+                <Input
+                  id="signup-last-name"
+                  v-model="signupForm.last_name"
+                  type="text"
+                  required
+                  placeholder="Enter your last name"
+                  autocomplete="last-name"
+                />
+              </div>
+              <Button type="submit" :disabled="loading" class="w-full mt-4">
+                {{ loading ? 'Creating account...' : 'Create Account' }}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </TabsContent>
+    </Tabs>
 
     <!-- Error/Success Messages -->
     <div
@@ -103,59 +131,6 @@
     >
       {{ message }}
     </div>
-
-    <Tabs default-value="account" class="w-[400px]">
-      <TabsList class="grid w-full grid-cols-2">
-        <TabsTrigger value="account"> Account </TabsTrigger>
-        <TabsTrigger value="password"> Password </TabsTrigger>
-      </TabsList>
-      <TabsContent value="account">
-        <Card>
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you're done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="space-y-2">
-            <div class="space-y-1">
-              <Label for="name">Name</Label>
-              <Input id="name" default-value="Pedro Duarte" />
-            </div>
-            <div class="space-y-1">
-              <Label for="username">Username</Label>
-              <Input id="username" default-value="@peduarte" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-      <TabsContent value="password">
-        <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you'll be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="space-y-2">
-            <div class="space-y-1">
-              <Label for="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div class="space-y-1">
-              <Label for="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-    </Tabs>
   </div>
 </template>
 
@@ -170,6 +145,9 @@ const loginForm = reactive({
 const signupForm = reactive({
   email: '',
   password: '',
+  first_name: '',
+  last_name: '',
+  username: '',
 });
 // Methods using the composable
 const onLogin = async () => {
