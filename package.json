@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "update:supabase-types": "supabase gen types typescript --project-id ohrivakkzkfkqiuxeowg --schema public > types/supabase.ts"
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.4.0",
@@ -28,6 +29,7 @@
     "eslint": "^9.27.0",
     "lucide-vue-next": "^0.511.0",
     "nuxt": "^3.17.4",
+    "pinia": "^3.0.3",
     "reka-ui": "^2.3.0",
     "shadcn-nuxt": "2.2.0",
     "stripe": "^18.1.1",
@@ -43,6 +45,6 @@
   "devDependencies": {
     "prettier": "^3.5.3",
     "prisma": "^6.8.2",
-    "supabase": "^2.24.3"
+    "supabase": ">=1.8.1"
   }
 }

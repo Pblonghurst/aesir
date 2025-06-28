@@ -1,7 +1,7 @@
 // server/api/profiles/[id].put.ts
 import { serverSupabaseClient } from '#supabase/server';
 import { defineEventHandler, readBody, sendError, createError } from 'h3';
-import type { Database } from '~/types/db-profiles';
+import type { Database } from '~/types/supabase';
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient<Database>(event);

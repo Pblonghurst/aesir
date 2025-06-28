@@ -19,8 +19,6 @@
 </template>
 
 <script setup>
-const { user } = useAuth();
-
 // Protect this page - redirect to login if not authenticated
 definePageMeta({
   middleware: 'auth',

@@ -14,15 +14,27 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const id = getRouterParam(event, 'id');
-  if (!id) {
+  const body = await readBody(event);
+  const { name, image_url, rules_text, rules_file_url } = body;
+
+  if (!name) {
     throw createError({
       statusCode: 400,
-      message: 'Game ID is required',
+      message: 'Name is required',
     });
   }
 
-  const { error } = await client.from('games').delete().eq('id', Number(id)).eq('user_id', user.id);
+  const { data, error } = await client
+    .from('games')
+    .insert({
+      name,
+      image_url,
+      rules_text,
+      rules_file_url,
+      user_id: user.id,
+    })
+    .select()
+    .single();
 
   if (error) {
     throw createError({
@@ -31,5 +43,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return { success: true };
+  return data;
 });

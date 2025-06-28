@@ -14,15 +14,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const id = getRouterParam(event, 'id');
-  if (!id) {
-    throw createError({
-      statusCode: 400,
-      message: 'Game ID is required',
-    });
-  }
-
-  const { error } = await client.from('games').delete().eq('id', Number(id)).eq('user_id', user.id);
+  const { data, error } = await client.from('games').select('*').eq('user_id', user.id);
 
   if (error) {
     throw createError({
@@ -31,5 +23,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return { success: true };
+  return data;
 });
