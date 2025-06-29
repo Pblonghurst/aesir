@@ -9,7 +9,7 @@
 
     <!-- AI Chat Interface - Main Focus -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      <RulesAI />
+      <!-- <RulesAI /> -->
       <!-- Sidebar -->
       <div class="space-y-6">
         <MyGames />

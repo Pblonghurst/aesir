@@ -158,20 +158,12 @@ const signupForm = reactive({
 
 // login method
 const onLogin = async () => {
-  const result = await authStore.handleSignIn(loginForm.email, loginForm.password, '/dashboard');
-  if (result.success) {
-    // Form will be cleared automatically on navigation
-  }
+  authStore.handleSignIn(loginForm.email, loginForm.password, '/dashboard');
 };
 
 // signup method
 const onSignUp = async () => {
-  const result = await authStore.handleSignUp(signupForm.email, signupForm.password);
-  if (result.success) {
-    // Reset form on success
-    signupForm.email = '';
-    signupForm.password = '';
-  }
+  authStore.handleSignUp(signupForm.email, signupForm.password);
 };
 
 // Clear messages when switching tabs
