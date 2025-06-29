@@ -16,13 +16,15 @@
         </div>
 
         <div class="space-y-2">
-          <Label for="image">Game Image</Label>
-          <Input id="image" type="file" accept="image/*" />
+          <Label for="image">Game Image (Optional)</Label>
+          <Input id="image" type="file" accept="image/*" disabled />
+          <p class="text-xs text-gray-400">File upload disabled for now</p>
         </div>
 
         <div class="space-y-2">
-          <Label for="rules">Rules File</Label>
-          <Input id="rules" type="file" accept=".pdf,.doc,.docx,.txt" />
+          <Label for="rules">Rules File (Optional)</Label>
+          <Input id="rules" type="file" accept=".pdf,.doc,.docx,.txt" disabled />
+          <p class="text-xs text-gray-400">File upload disabled for now</p>
         </div>
 
         <div class="space-y-2">
@@ -31,12 +33,12 @@
             id="rules_text"
             v-model="newGame.rules_text"
             placeholder="Enter game rules or instructions"
-            class="min-h-[100px]"
+            class="min-h-[100px] w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
           />
         </div>
 
         <DialogFooter>
-          <Button type="submit" :disabled="dialogStore.isLoading">
+          <Button type="submit" :disabled="dialogStore.isLoading" @click="handleAddGame()">
             <span v-if="dialogStore.isLoading">Adding...</span>
             <span v-else>Add Game</span>
           </Button>
@@ -47,10 +49,8 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useGames } from '../../composables/useGames';
 import { useGamesAddDialogStore, useGamesStore } from '../../store/gamesStore';
 
-const { createGame } = useGames();
 const dialogStore = useGamesAddDialogStore();
 const gamesStore = useGamesStore();
 const newGame = ref({
@@ -62,25 +62,22 @@ const newGame = ref({
 
 // add game
 const handleAddGame = async () => {
-  if (!newGame.value.name) return;
-
-  dialogStore.isLoading = true;
   try {
-    const result = await createGame(newGame.value);
-    if (result) {
-      dialogStore.isOpen = false;
-      // Reset form
-      newGame.value = {
-        name: '',
-        image_url: '',
-        rules_text: '',
-        rules_file_url: '',
-      };
-      // Refresh games list using store
-      await gamesStore.fetchGames();
-    }
+    dialogStore.isLoading = true;
+    await gamesStore.createGame(newGame.value);
+
+    // Reset form
+    newGame.value = {
+      name: '',
+      image_url: '',
+      rules_text: '',
+      rules_file_url: '',
+    };
+
+    // Close dialog
+    dialogStore.closeAddGameDialog();
   } catch (error) {
-    console.error('Error adding game:', error);
+    console.error('Failed to create game:', error);
   } finally {
     dialogStore.isLoading = false;
   }

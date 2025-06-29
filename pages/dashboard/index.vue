@@ -24,4 +24,8 @@ definePageMeta({
   middleware: 'auth',
   layout: 'dashboard',
 });
+
+import { useGamesStore } from '@/store/gamesStore';
+const gamesStore = useGamesStore();
+gamesStore.fetchGames();
 </script>

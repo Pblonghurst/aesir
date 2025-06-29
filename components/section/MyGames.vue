@@ -20,24 +20,19 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="gamesStore.getGames.length === 0" class="text-center py-8 text-gray-400">
+      <div v-else-if="games.length === 0" class="text-center py-8 text-gray-400">
         <p>No games found. Create your first game!</p>
       </div>
 
       <!-- Games List -->
       <div
         v-else
-        v-for="game in gamesStore.getGames"
+        v-for="game in games"
         :key="game.id"
         class="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors cursor-pointer"
         @click="selectedGame = game.id"
         :class="selectedGame === game.id ? 'ring-2 ring-purple-500' : ''"
       >
-        <img
-          :src="game.image_url || '/placeholder-game.png'"
-          :alt="game.name"
-          class="w-10 h-10 rounded object-cover"
-        />
         <div class="flex-1 min-w-0">
           <p class="font-medium text-white truncate">{{ game.name }}</p>
           <p class="text-xs text-gray-400">Game</p>
@@ -51,26 +46,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
 import { useGamesStore, useGamesAddDialogStore } from '@/store/gamesStore';
 
-const gamesStore = useGamesStore();
 const dialogStore = useGamesAddDialogStore();
+const gamesStore = useGamesStore();
+
 const selectedGame = ref(null);
-
-// Manual fetch function
-const manualFetch = async () => {
-  try {
-    const response = await fetch('/api/auth/games');
-    const data = await response.json();
-    console.log('Manual fetch data:', data);
-  } catch (error) {
-    console.error('Manual fetch error:', error);
-  }
-};
-
-onMounted(() => {
-  gamesStore.fetchGames();
-  manualFetch(); // Call manual fetch on mount
-});
+const games = computed(() => gamesStore.getGames);
 </script>

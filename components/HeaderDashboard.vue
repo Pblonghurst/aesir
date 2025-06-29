@@ -1,6 +1,6 @@
 <template>
-  <nav class="shadow-md p-2 bg-gray-900">
-    <div class="max-w-7xl mx-auto py-4">
+  <nav class="shadow-md p-2 bg-gray-900 h-[100px] flex items-center">
+    <div class="max-w-7xl mx-auto py-4 w-full">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-8">
           <h1 class="text-2xl font-bold text-white">Dashboard</h1>
