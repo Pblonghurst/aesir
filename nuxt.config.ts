@@ -26,9 +26,10 @@ export default defineNuxtConfig({
   },
   components: [
     {
-      path: '~/components', // auto-import any .vue under components/ui
+      path: '~/components',
       extensions: ['vue'],
-      pathPrefix: false, // so that nested folders don’t become part of the name
+      pathPrefix: false,
+      global: true,
     },
   ],
 

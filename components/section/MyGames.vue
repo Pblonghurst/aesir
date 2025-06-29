@@ -5,13 +5,13 @@
     <CardHeader class="flex items-center justify-between text-white">
       <CardTitle>My Games</CardTitle>
       <Button @click="dialogStore.openAddGameDialog()">Add Game</Button>
+      <Button @click="test()"> test </Button>
     </CardHeader>
     <!-- Games List -->
     <CardContent class="flex flex-col gap-4">
       <!-- Loading State -->
       <div v-if="gamesStore.isLoading" class="flex items-center justify-center py-8">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-        <span class="ml-2 text-gray-400">Loading games...</span>
+        <Spinner size="lg" variant="primary" />
       </div>
 
       <!-- Error State -->
@@ -53,4 +53,8 @@ const gamesStore = useGamesStore();
 
 const selectedGame = ref(null);
 const games = computed(() => gamesStore.getGames);
+
+const test = () => {
+  gamesStore.isLoading = true;
+};
 </script>
