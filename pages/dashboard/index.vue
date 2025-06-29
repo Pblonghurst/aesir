@@ -26,6 +26,10 @@ definePageMeta({
 });
 
 import { useGamesStore } from '@/store/gamesStore';
+import { useAuthStore } from '@/store/authStore';
+
 const gamesStore = useGamesStore();
+const authStore = useAuthStore();
 gamesStore.fetchGames();
+authStore.fetchProfile();
 </script>

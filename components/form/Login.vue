@@ -135,7 +135,13 @@
 </template>
 
 <script setup>
-const { user, loading, message, messageType, handleLogin, handleSignUp, clearMessage } = useAuth();
+import { useAuthStore } from '@/store/authStore';
+const authStore = useAuthStore();
+const user = computed(() => authStore.user);
+const loading = computed(() => authStore.loading);
+const message = computed(() => authStore.message);
+const messageType = computed(() => authStore.messageType);
+
 // Local reactive data
 const activeTab = ref('login');
 const loginForm = reactive({
@@ -149,23 +155,27 @@ const signupForm = reactive({
   last_name: '',
   username: '',
 });
-// Methods using the composable
+
+// login method
 const onLogin = async () => {
-  const result = await handleLogin(loginForm.email, loginForm.password, '/dashboard');
+  const result = await authStore.handleSignIn(loginForm.email, loginForm.password, '/dashboard');
   if (result.success) {
     // Form will be cleared automatically on navigation
   }
 };
+
+// signup method
 const onSignUp = async () => {
-  const result = await handleSignUp(signupForm.email, signupForm.password);
+  const result = await authStore.handleSignUp(signupForm.email, signupForm.password);
   if (result.success) {
     // Reset form on success
     signupForm.email = '';
     signupForm.password = '';
   }
 };
+
 // Clear messages when switching tabs
 watch(activeTab, () => {
-  clearMessage();
+  authStore.clearMessage();
 });
 </script>

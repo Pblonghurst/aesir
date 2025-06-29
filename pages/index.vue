@@ -31,6 +31,9 @@
 definePageMeta({
   layout: 'default',
 });
+
+import { useAuthStore } from '@/store/authStore';
+const authStore = useAuthStore();
 // Use the global auth composable
-const { user } = useAuth();
+const user = computed(() => authStore.user);
 </script>

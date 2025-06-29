@@ -36,7 +36,7 @@
                     >
                       <img
                         v-if="profile?.avatar"
-                        :src="profile.avatar"
+                        :src="profile?.avatar"
                         :alt="profile?.email"
                         class="w-full h-full object-cover"
                       />
@@ -58,7 +58,7 @@
                       <DropdownMenuItem class="cursor-pointer"> Edit Profile </DropdownMenuItem>
                     </DialogTrigger>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem @click="onSignOut" class="cursor-pointer">
+                    <DropdownMenuItem @click="authStore.handleSignOut('/')" class="cursor-pointer">
                       <span>Sign Out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -73,10 +73,10 @@
 
                   <!-- update profile Form -->
                   <Label for="avatar">Avatar</Label>
-                  <Input type="file" :placeholder="profile.avatar" />
+                  <Input type="file" :placeholder="profile?.avatar || ''" />
 
                   <Label for="email">Email</Label>
-                  <Input type="email" :model-value="user.email" disabled />
+                  <Input type="email" :model-value="user?.email || ''" disabled />
 
                   <Label for="username">Username</Label>
                   <Input type="text" v-model="formData.username" />
@@ -106,9 +106,13 @@
 </template>
 
 <script setup>
-const { user, handleSignOut, profile } = useAuth();
-const isLoading = ref(false);
-const saveStatus = ref(false);
+import { useAuthStore } from '@/store/authStore';
+const authStore = useAuthStore();
+
+const user = computed(() => authStore.user);
+const profile = computed(() => authStore.profile);
+const isLoading = computed(() => authStore.loading);
+const saveStatus = computed(() => authStore.saveStatus);
 
 // form data
 const formData = reactive({
@@ -117,53 +121,10 @@ const formData = reactive({
   last_name: '',
 });
 
-// watch profile
-watch(
-  () => profile.value,
-  (newProfile) => {
-    if (newProfile) {
-      formData.username = newProfile.username;
-      formData.first_name = newProfile.first_name;
-      formData.last_name = newProfile.last_name;
-    }
-  },
-  { immediate: true }
-);
-
 // update profile
 async function updateProfile() {
-  isLoading.value = true;
-  saveStatus.value = false;
-  try {
-    const response = await $fetch(`/api/auth/profiles/${user.value.id}`, {
-      method: 'PUT',
-      body: {
-        username: formData.username,
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-      },
-    });
-    if (response.success) {
-      console.log('Profile was updated', response.profile);
-      // Show success feedback
-      saveStatus.value = true;
-      setTimeout(() => {
-        saveStatus.value = false;
-      }, 1000);
-    } else {
-      console.error('Update failed', response);
-    }
-  } catch (error) {
-    console.error('Update error:', error);
-  } finally {
-    isLoading.value = false;
-  }
+  await authStore.updateProfile(formData);
 }
-
-// sign out
-const onSignOut = async () => {
-  await handleSignOut('/');
-};
 
 // get initials from email
 const initial = computed(() => {
