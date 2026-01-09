@@ -5,7 +5,7 @@
     <CardHeader class="flex items-center justify-between text-white">
       <CardTitle>My Games</CardTitle>
       <Button @click="dialogStore.openAddGameDialog()">Add Game</Button>
-      <Button @click="test()"> test </Button>
+      <!-- <Button @click="test()"> test </Button> -->
     </CardHeader>
     <!-- Games List -->
     <CardContent class="flex flex-col gap-4">

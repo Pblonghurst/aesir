@@ -10,37 +10,20 @@
           <h3 class="text-xl font-bold text-white">Board Game Rules Assistant</h3>
           <div class="flex items-center gap-3">
             <!-- Game Selection Dropdown -->
-            <Select>
+            <Select v-model="selectedGame">
               <SelectTrigger class="w-[180px] text-white bg-gray-700 border border-gray-600">
-                <SelectValue placeholder="Select a fruit" />
+                <SelectValue placeholder="Select a game" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple"> Apple </SelectItem>
-                  <SelectItem value="banana"> Banana </SelectItem>
-                  <SelectItem value="blueberry"> Blueberry </SelectItem>
-                  <SelectItem value="grapes"> Grapes </SelectItem>
-                  <SelectItem value="pineapple"> Pineapple </SelectItem>
+                  <SelectItem v-for="game in games" :key="game.id" :value="game.id">
+                    {{ game.name }}
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Button>Clear Chat</Button>
           </div>
         </div>
-        <!-- Game Selected -->
-        <!-- <div
-          v-if="selectedGameData"
-          class="flex items-center gap-3 mt-3 p-3 bg-gray-700/50 rounded-lg"
-        >
-          <img
-            :src="selectedGameData.image"
-            :alt="selectedGameData.name"
-            class="w-8 h-8 rounded object-cover"
-          />
-          <span class="text-white font-medium">{{ selectedGameData.name }}</span>
-          <span class="text-gray-400 text-sm">• Rules loaded</span>
-        </div> -->
       </div>
 
       <!-- Chat Messages -->
@@ -72,20 +55,33 @@
           <input
             type="text"
             placeholder="Ask about game rules... (e.g., 'How do I win?' or 'What's the setup?')"
-            class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500"
+            class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 h-[36px]"
           />
-          <Button class="h-[50px]">Send</Button>
+          <Button>Send</Button>
         </form>
-        <p class="text-gray-400 text-xs mt-2" v-if="1 == 1">
+        <p class="text-gray-400 text-xs mt-2" v-if="!chosenGame">
           Select a game first to start asking questions
+        </p>
+        <p class="text-gray-300 text-xs mt-2" v-else>
+          Selected: <span class="font-semibold">{{ chosenGame?.name }}</span>
         </p>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-// Reactive data
+import { useGamesStore } from '@/store/gamesStore';
+import { TableColumnsSplitIcon } from 'lucide-vue-next';
+
+const gamesStore = useGamesStore();
+const games = computed(() => gamesStore.games);
 const selectedGame = ref('');
+
+// Computed property to get the full game object from the selected ID
+const chosenGame = computed(() => {
+  if (!selectedGame.value) return null;
+  return games.value.find((g) => g.id === selectedGame.value);
+});
 
 // Add your methods here
 const sendMessage = () => {

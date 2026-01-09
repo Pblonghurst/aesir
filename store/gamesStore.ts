@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Database } from '@/types/supabase';
+import type { Database } from '~/types/supabase';
 
 type Game = Database['public']['Tables']['games']['Row'];
 
