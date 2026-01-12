@@ -2,11 +2,11 @@
   <!-- Rules AI -->
   <div class="lg:col-span-3">
     <div
-      class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 h-[600px] flex flex-col"
+      class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 h-[calc(100vh-164px)] flex flex-col"
     >
       <!-- Chat Header -->
       <div class="p-6 border-b border-gray-700">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between flex-wrap gap-4">
           <h3 class="text-xl font-bold text-white">Board Game Rules Assistant</h3>
           <div class="flex items-center gap-3">
             <!-- Game Selection Dropdown -->
@@ -28,7 +28,11 @@
 
       <!-- Chat Messages -->
       <div class="flex-1 overflow-y-auto p-6 space-y-4" ref="chatContainer">
-        <div class="text-center text-gray-400 mt-20">
+        <!-- No messages -->
+        <div
+          class="text-center text-gray-400 mt-20 h-[calc(100%-164px)] flex flex-col items-center justify-center"
+          v-if="messages.length === 0"
+        >
           <svg
             class="w-16 h-16 mx-auto mb-4 text-gray-600"
             fill="none"
@@ -47,17 +51,28 @@
             Try asking: "How do I set up the game?" or "What happens when I roll a 6?"
           </p>
         </div>
+
+        <!-- Messages -->
+        <div v-for="message in messages" :key="message.id">
+          <div v-if="message.role === 'assistant'">
+            <p class="text-white">{{ message.content }}</p>
+          </div>
+          <div v-else>
+            <p class="text-orange-500">{{ message.content }}</p>
+          </div>
+        </div>
       </div>
 
       <!-- Chat Input -->
       <div class="p-6 border-t border-gray-700">
         <form class="flex gap-3">
           <input
+            v-model="question"
             type="text"
             placeholder="Ask about game rules... (e.g., 'How do I win?' or 'What's the setup?')"
             class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 h-[36px]"
           />
-          <Button>Send</Button>
+          <Button type="button" @click="sendMessage(question)">Send</Button>
         </form>
         <p class="text-gray-400 text-xs mt-2" v-if="!chosenGame">
           Select a game first to start asking questions
@@ -71,11 +86,18 @@
 </template>
 <script setup>
 import { useGamesStore } from '@/store/gamesStore';
-import { TableColumnsSplitIcon } from 'lucide-vue-next';
 
 const gamesStore = useGamesStore();
 const games = computed(() => gamesStore.games);
+
+// game selection
 const selectedGame = ref('');
+
+// chat messages
+const messages = ref([]);
+const question = ref('');
+const isLoading = ref(false);
+const error = ref(null);
 
 // Computed property to get the full game object from the selected ID
 const chosenGame = computed(() => {
@@ -83,12 +105,26 @@ const chosenGame = computed(() => {
   return games.value.find((g) => g.id === selectedGame.value);
 });
 
-// Add your methods here
-const sendMessage = () => {
-  // Add your send message functionality
+const test = () => {
+  console.log(question.value);
 };
-
-const clearChat = () => {
-  // Add your clear chat functionality
+// Add your methods here
+const sendMessage = async (question) => {
+  try {
+    isLoading.value = true;
+    error.value = null;
+    const response = await $fetch(`/api/auth/ai`, {
+      method: 'POST',
+      body: {
+        question,
+      },
+    });
+    // add the response to the messages
+    messages.value.push({ role: 'assistant', content: response });
+  } catch (err) {
+    error.value = err.message;
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>

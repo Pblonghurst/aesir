@@ -1,18 +1,20 @@
 <template>
-  <nav class="shadow-md p-2 bg-gray-900 h-[100px] flex items-center">
+  <nav class="shadow-md py-2 bg-gray-900 h-[100px] flex items-center px-8">
     <div class="max-w-7xl mx-auto py-4 w-full">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-8">
           <h1 class="text-2xl font-bold text-white">Dashboard</h1>
           <nav class="flex gap-6">
-            <NuxtLink to="/" class="text-white hover:text-gray-400">Home</NuxtLink>
+            <NuxtLink to="/" class="text-white hover:text-gray-400 max-[500px]:hidden"
+              >Home</NuxtLink
+            >
           </nav>
         </div>
         <div class="flex items-center gap-4">
           <!-- User Info Section -->
           <div class="flex items-center gap-3">
             <!-- User Details -->
-            <div class="text-right flex items-end flex-col gap-1">
+            <div class="text-right flex items-end flex-col gap-1 max-[500px]:hidden">
               <Skeleton v-if="!profile" class="h-4 w-[100px]" />
               <div v-else class="text-sm font-medium text-white">
                 {{ profile?.username }}
