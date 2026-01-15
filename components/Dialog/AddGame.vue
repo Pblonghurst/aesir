@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <!-- Add Game Dialog -->
   <Dialog v-model:open="dialogStore.isOpen">
     <DialogContent class="sm:max-w-[425px]">
@@ -29,11 +29,10 @@
 
         <div class="space-y-2">
           <Label for="rules_text">Rules Text</Label>
-          <textarea
+          <Textarea
             id="rules_text"
             v-model="newGame.rules_text"
             placeholder="Enter game rules or instructions"
-            class="min-h-[100px] w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
           />
         </div>
 
@@ -49,7 +48,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useGamesAddDialogStore, useGamesStore } from '../../store/gamesStore';
+import { useGamesAddDialogStore, useGamesStore } from '@/store/gamesStore';
 
 const dialogStore = useGamesAddDialogStore();
 const gamesStore = useGamesStore();

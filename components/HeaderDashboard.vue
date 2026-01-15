@@ -34,7 +34,7 @@
                     <Skeleton v-if="!profile" class="h-12 w-12 rounded-full" />
                     <button
                       v-else
-                      class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-green-400 focus:outline-none"
+                      class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-orange-300 focus:outline-none"
                     >
                       <img
                         v-if="profile?.avatar"
@@ -52,12 +52,14 @@
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuLabel class="flex items-center justify-between px-2 py-1 gap-2">
+                    <!-- <DropdownMenuLabel class="flex items-center justify-between px-2 py-1 gap-2">
                       <span class="text-black">Dark Mode</span>
                       <Switch id="theme-toggle" />
-                    </DropdownMenuLabel>
+                    </DropdownMenuLabel> -->
                     <DialogTrigger as-child>
-                      <DropdownMenuItem class="cursor-pointer"> Edit Profile </DropdownMenuItem>
+                      <DropdownMenuItem class="cursor-pointer" @click="authStore.openProfileDialog">
+                        Edit Profile
+                      </DropdownMenuItem>
                     </DialogTrigger>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem @click="authStore.handleSignOut('/')" class="cursor-pointer">
@@ -65,39 +67,8 @@
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>My Profile</DialogTitle>
-                    <DialogDescription>
-                      Make changes to your profile here. Click save when you're done.
-                    </DialogDescription>
-                  </DialogHeader>
-
-                  <!-- update profile Form -->
-                  <Label for="avatar">Avatar</Label>
-                  <Input type="file" :placeholder="profile?.avatar || ''" />
-
-                  <Label for="email">Email</Label>
-                  <Input type="email" :model-value="user?.email || ''" disabled />
-
-                  <Label for="username">Username</Label>
-                  <Input type="text" v-model="formData.username" />
-
-                  <Label for="first_name">First Name</Label>
-                  <Input type="text" v-model="formData.first_name" />
-
-                  <Label for="last_name">Last Name</Label>
-                  <Input type="text" v-model="formData.last_name" />
-
-                  <DialogFooter>
-                    <!-- save button -->
-                    <Button @click="updateProfile" :disabled="isLoading || saveStatus">
-                      <span v-if="isLoading">Saving...</span>
-                      <span v-else-if="saveStatus">Saved</span>
-                      <span v-else>Save Changes</span>
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
+                <!-- view profile dialog -->
+                <ViewProfile />
               </Dialog>
             </div>
           </div>
@@ -113,20 +84,6 @@ const authStore = useAuthStore();
 
 const user = computed(() => authStore.user);
 const profile = computed(() => authStore.profile);
-const isLoading = computed(() => authStore.loading);
-const saveStatus = computed(() => authStore.saveStatus);
-
-// form data
-const formData = reactive({
-  username: '',
-  first_name: '',
-  last_name: '',
-});
-
-// update profile
-async function updateProfile() {
-  await authStore.updateProfile(formData);
-}
 
 // get initials from email
 const initial = computed(() => {

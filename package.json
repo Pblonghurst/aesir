@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "eslint": "^9.27.0",
     "lucide-vue-next": "^0.511.0",
+    "marked": "^17.0.1",
     "nuxt": "^3.17.4",
     "openai": "^6.16.0",
     "pinia": "^3.0.3",
@@ -40,6 +41,7 @@
     "vee-validate": "^4.15.0",
     "vue": "^3.5.14",
     "vue-router": "^4.5.1",
+    "vue-sonner": "^2.0.9",
     "zod": "^3.25.51"
   },
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",

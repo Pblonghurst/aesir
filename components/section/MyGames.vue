@@ -30,8 +30,8 @@
         v-for="game in games"
         :key="game.id"
         class="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors cursor-pointer"
-        @click="selectedGame = game.id"
-        :class="selectedGame === game.id ? 'ring-2 ring-purple-500' : ''"
+        @click="aiStore.setSelectedGame(game.id)"
+        :class="selectedGame === game.id ? 'ring-2 ring-orange-300' : ''"
       >
         <div class="flex-1 min-w-0">
           <p class="font-medium text-white truncate">{{ game.name }}</p>
@@ -47,13 +47,17 @@
 
 <script setup>
 import { useGamesStore, useGamesAddDialogStore } from '@/store/gamesStore';
+import { useAiStore } from '@/store/aiStore';
 
 const dialogStore = useGamesAddDialogStore();
 const gamesStore = useGamesStore();
+const aiStore = useAiStore();
 
-const selectedGame = ref(null);
+// computed properties
 const games = computed(() => gamesStore.getGames);
+const selectedGame = computed(() => aiStore.selectedGameId);
 
+// test function
 const test = () => {
   gamesStore.isLoading = true;
 };

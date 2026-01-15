@@ -1,8 +1,8 @@
 <template>
-  <div class="text-center mb-16">
-    <h2 class="text-5xl font-bold mb-6 text-white">Welcome to Your App</h2>
+  <div class="text-center mb-12">
+    <h2 class="text-5xl font-bold mb-6 text-white">Welcome!</h2>
     <p class="text-xl text-white max-w-2xl mx-auto dark:text-text-light">
-      Get started with our amazing platform. Sign up today and unlock powerful features.
+      You're logged in, go to your dashboard to get started.
     </p>
   </div>
 </template>

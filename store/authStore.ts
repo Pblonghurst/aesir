@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import type { Database } from '~/types/supabase';
+import { toast } from 'vue-sonner';
 
 // profile type
 type Profile = Database['public']['Tables']['profiles']['Row'];
@@ -16,9 +17,14 @@ export const useAuthStore = defineStore('authStore', {
       message: '',
       isFetched: false,
       messageType: 'success' as 'success' | 'error',
+      profileDialog: false,
     };
   },
   actions: {
+    // update profile
+    openProfileDialog() {
+      this.profileDialog = true;
+    },
     // fetch profile
     async fetchProfile() {
       const supabaseClient = useSupabaseClient();
@@ -146,14 +152,17 @@ export const useAuthStore = defineStore('authStore', {
           console.log('Profile was updated', response.profile);
           // Show success feedback
           this.saveStatus = true;
+          toast.success('Profile updated successfully', {});
           setTimeout(() => {
             this.saveStatus = false;
           }, 1000);
         } else {
           console.error('Update failed', response);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Update error:', error);
+        const errorMessage = error?.data?.message || error?.message || 'Update failed';
+        toast.error(errorMessage, {});
       } finally {
         this.loading = false;
       }

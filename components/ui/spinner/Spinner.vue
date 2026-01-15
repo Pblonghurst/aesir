@@ -22,7 +22,7 @@ const sizeClasses = {
 
 const variantClasses = {
   default: 'border-gray-300 dark:border-gray-600',
-  primary: 'border-primary',
+  primary: 'border-white',
   secondary: 'border-secondary-foreground',
   destructive: 'border-destructive',
 };
@@ -33,10 +33,10 @@ const variantClasses = {
     data-slot="spinner"
     :class="
       cn(
-        'animate-spin rounded-full border-2 border-transparent',
+        'animate-spin rounded-full border-3 border-transparent',
         sizeClasses[size],
         variantClasses[variant],
-        'border-t-current',
+        'border-t-orange-400',
         props.class
       )
     "

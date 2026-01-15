@@ -32,18 +32,28 @@ export default defineEventHandler(async (event) => {
     last_name?: string;
   };
 
-  // 5) Validate that at least one updatable field is present
-  if (payload.username === undefined) {
-    return sendError(event, createError({ statusCode: 400, statusMessage: 'Nothing to update' }));
+  // 5) Validate that username is provided
+  if (payload.username === undefined || payload.username === null) {
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'Username is required' }));
   }
 
-  // 6) Perform the update in the "profiles" table
+  // 6) Validate username length (trim and check)
+  const trimmedUsername = payload.username.trim();
+  if (!trimmedUsername) {
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'Username is required' }));
+  }
+  
+  if (trimmedUsername.length < 3) {
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'Username must be at least 3 characters' }));
+  }
+
+  // 7) Perform the update in the "profiles" table
   const { data: updatedProfile, error: updateError } = await supabase
     .from('profiles')
     .update({
-      username: payload.username,
-      first_name: payload.first_name,
-      last_name: payload.last_name,
+      username: trimmedUsername,
+      first_name: payload.first_name?.trim() || null,
+      last_name: payload.last_name?.trim() || null,
     })
     .eq('id', id)
     .select()
@@ -53,7 +63,7 @@ export default defineEventHandler(async (event) => {
     return sendError(event, createError({ statusCode: 500, statusMessage: updateError.message }));
   }
 
-  // 7) Return the updated profile row
+  // 8) Return the updated profile row
   return {
     success: true,
     profile: updatedProfile,

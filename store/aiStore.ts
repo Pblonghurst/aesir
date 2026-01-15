@@ -1,25 +1,24 @@
 import { defineStore } from 'pinia';
 import type { Database } from '~/types/supabase';
 
-// ai type
-type Ai = {
-  id: string;
-  name: string;
-  description: string;
-  image_url: string;
-  rules_text: string;
-  rules_file_url: string;
-};
+type Game = Database['public']['Tables']['games']['Row'];
 
-// auth store
+// ai store
 export const useAiStore = defineStore('aiStore', {
   state: () => {
     return {
-      ai: null as Ai | null,
+      selectedGameId: null as string | number | null,
       isLoading: false,
       isFetched: false,
       error: null as string | null,
     };
   },
-  actions: {},
+  actions: {
+    setSelectedGame(gameId: string | number | null) {
+      this.selectedGameId = gameId;
+    },
+    clearSelectedGame() {
+      this.selectedGameId = null;
+    },
+  },
 });

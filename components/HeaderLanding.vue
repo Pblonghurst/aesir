@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
       <h1 class="text-2xl font-bold text-white">BoardGameHub</h1>
       <div v-if="user && !userLoading" class="flex items-center gap-4">
-        <span class="text-white">Welcome, {{ user.email }}</span>
+        <span class="text-white max-[500px]:hidden">Welcome, {{ user.email }}</span>
         <Button @click="authStore.handleSignOut('/')">Sign Out</Button>
       </div>
     </div>
