@@ -1,6 +1,9 @@
 <template lang="">
   <!-- Auth Forms -->
-  <div v-if="!user" class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
+  <div
+    v-if="!user"
+    class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 h-full flex flex-col justify-center items-center"
+  >
     <Tabs v-model="activeTab" class="w-full">
       <!-- tabs list -->
       <TabsList class="grid w-full grid-cols-2">

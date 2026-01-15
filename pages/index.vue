@@ -1,17 +1,10 @@
 <template>
-  <div class="max-w-7xl mx-auto px-6 py-20">
+  <div class="max-w-7xl mx-auto px-6 py-20 max-[700px]:py-10">
     <!-- Hero Section -->
-    <HeroLanding />
+    <HeroLanding v-if="user" />
 
     <!-- Sign in/up form -->
     <Login />
-
-    <!-- Logged in state -->
-    <div v-if="user" class="text-center flex flex-col items-center justify-center gap-4">
-      <Button class="bg-orange-300 text-black hover:bg-orange-400" @click="navigateTo('/dashboard')"
-        >Go to Dashboard</Button
-      >
-    </div>
 
     <!-- pricing cards -->
   </div>

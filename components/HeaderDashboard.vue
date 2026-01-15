@@ -3,7 +3,11 @@
     <div class="max-w-7xl mx-auto py-4 w-full">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-8">
-          <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+          <h1
+            class="text-2xl font-bold bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent animate-fade-in"
+          >
+            Dashboard
+          </h1>
           <nav class="flex gap-6">
             <NuxtLink to="/" class="text-white hover:text-gray-400 max-[500px]:hidden"
               >Home</NuxtLink
