@@ -1,14 +1,12 @@
 # Aesir
 
-**🎮 [Live Demo](https://aesir-two.vercel.app/)**
+# **🎮 [Live Demo](https://aesir-two.vercel.app/)**
 
 Aesir is an AI-powered application that helps you master complex game rules. Upload rulesets, manuals, or documentation and chat with AI to get instant, accurate clarifications and examples.
 
 This application uses **Supabase** for backend services including authentication, database management, and API endpoints.
 
 ---
-
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
@@ -80,4 +78,5 @@ yarn preview
 bun run preview
 ```
 
+Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
