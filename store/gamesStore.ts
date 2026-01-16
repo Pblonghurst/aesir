@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import type { Database } from '~/types/supabase';
+import { toast } from 'vue-sonner';
 
 type Game = Database['public']['Tables']['games']['Row'];
 
@@ -48,8 +49,9 @@ export const useGamesStore = defineStore('gamesStore', {
         this.games.push(data);
         return data;
       } catch (err: any) {
-        this.error = err.message || 'Failed to create game';
-        throw err;
+        const errorMessage = err.message || 'Failed to create game';
+        this.error = errorMessage;
+        toast.error(errorMessage);
       } finally {
         this.isLoading = false;
       }

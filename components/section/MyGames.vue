@@ -4,7 +4,7 @@
     <!-- Header -->
     <CardHeader class="flex items-center justify-between text-white">
       <CardTitle>My Games</CardTitle>
-      <Button @click="dialogStore.openAddGameDialog()">Add Game</Button>
+      <Button variant="primary" @click="dialogStore.openAddGameDialog()">Add Game</Button>
       <!-- <Button @click="test()"> test </Button> -->
     </CardHeader>
     <!-- Games List -->
@@ -12,11 +12,6 @@
       <!-- Loading State -->
       <div v-if="gamesStore.isLoading" class="flex items-center justify-center py-8">
         <Spinner size="lg" variant="primary" />
-      </div>
-
-      <!-- Error State -->
-      <div v-else-if="gamesStore.error" class="text-red-400 text-center py-4">
-        {{ gamesStore.error }}
       </div>
 
       <!-- Empty State -->

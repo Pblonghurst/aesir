@@ -68,7 +68,12 @@
             placeholder="Ask about game rules..."
             class="flex-1 bg-muted-700 border-2 border-muted-500 rounded-lg px-3 py-6 text-white focus:outline-none focus:border-brand-400 h-[36px]"
           />
-          <Button :disabled="isLoading || !question" type="submit" class="h-[52px] w-[52px]">
+          <Button
+            variant="primary"
+            :disabled="isLoading || !question"
+            type="submit"
+            class="h-[52px] w-[52px]"
+          >
             Ask
           </Button>
         </form>
