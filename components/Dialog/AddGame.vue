@@ -18,13 +18,13 @@
         <div class="space-y-2">
           <Label for="image">Game Image (Optional)</Label>
           <Input id="image" type="file" accept="image/*" disabled />
-          <p class="text-xs text-gray-400">File upload disabled for now</p>
+          <p class="text-xs text-muted-400">File upload disabled for now</p>
         </div>
 
         <div class="space-y-2">
           <Label for="rules">Rules File (Optional)</Label>
           <Input id="rules" type="file" accept=".pdf,.doc,.docx,.txt" disabled />
-          <p class="text-xs text-gray-400">File upload disabled for now</p>
+          <p class="text-xs text-muted-400">File upload disabled for now</p>
         </div>
 
         <div class="space-y-2">

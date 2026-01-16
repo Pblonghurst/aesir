@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
 button:hover {
   cursor: pointer;
 }
@@ -44,6 +42,29 @@ button:hover {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Brand colors (orange) */
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand: #fb923c;
+  
+  /* Muted colors (gray) */
+  --color-muted-300: #d1d5db;
+  --color-muted-400: #9ca3af;
+  --color-muted-500: #6b7280;
+  --color-muted-600: #4b5563;
+  --color-muted-700: #374151;
+  --color-muted-800: #1f2937;
+  
+  /* Border colors */
+  --color-border-light: #4b5563;
+  --color-border-dark: #1f2937;
+  
+  /* Accent colors */
+  --color-accent-light: #fdba74;
+  --color-accent-dark: #f97316;
 }
 
 :root {

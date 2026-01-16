@@ -1,12 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto px-6 py-20 max-[700px]:py-10">
     <!-- Hero Section -->
-    <HeroLanding v-if="user" />
-
-    <!-- Sign in/up form -->
-    <Login />
-
-    <!-- pricing cards -->
+    <HeroLanding />
   </div>
 </template>
 

@@ -10,7 +10,7 @@
 
 <style scoped>
 .animated-gradient {
-  background: linear-gradient(-45deg, #111827, #1e293b, #0f172a, #1e293b);
+  background: linear-gradient(-45deg, #0a0e14, #0d1117, #0f1419, #0a0e14);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }

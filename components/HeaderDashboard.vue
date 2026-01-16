@@ -1,15 +1,16 @@
 <template>
-  <nav class="shadow-md py-2 bg-gray-900 h-[100px] flex items-center px-8">
+  <nav class="py-2 h-[100px] flex items-center px-8">
     <div class="max-w-7xl mx-auto py-4 w-full">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-8">
           <h1
-            class="text-2xl font-bold bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent animate-fade-in"
+            class="text-2xl font-bold flex items-center gap-2 bg-gradient-to-r from-brand-300 via-brand-400 to-brand-500 bg-clip-text text-transparent animate-fade-in"
           >
-            Dashboard
+            <Logo />
+            Aesir
           </h1>
           <nav class="flex gap-6">
-            <NuxtLink to="/" class="text-white hover:text-gray-400 max-[500px]:hidden"
+            <NuxtLink to="/" class="text-white hover:text-muted-400 max-[500px]:hidden"
               >Home</NuxtLink
             >
           </nav>
@@ -24,7 +25,7 @@
                 {{ profile?.username }}
               </div>
               <Skeleton v-if="!profile" class="h-4 w-[150px]" />
-              <div v-else class="text-xs text-gray-400">
+              <div v-else class="text-xs text-muted-400">
                 {{ user?.email }}
               </div>
               <div class="flex items-center space-x-4"></div>
@@ -38,7 +39,7 @@
                     <Skeleton v-if="!profile" class="h-12 w-12 rounded-full" />
                     <button
                       v-else
-                      class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center hover:ring-2 hover:ring-orange-300 focus:outline-none"
+                      class="w-10 h-10 rounded-full overflow-hidden bg-muted-700 flex items-center justify-center hover:ring-2 hover:ring-brand-400 focus:outline-none"
                     >
                       <img
                         v-if="profile?.avatar"
@@ -84,6 +85,7 @@
 
 <script setup>
 import { useAuthStore } from '@/store/authStore';
+import Logo from '@/components/ui/logos/Logo.vue';
 const authStore = useAuthStore();
 
 const user = computed(() => authStore.user);

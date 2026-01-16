@@ -1,6 +1,6 @@
 <template>
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto py-8">
+  <main class="max-w-7xl mx-auto">
     <!-- Welcome Section -->
     <!-- <div class="mb-8">
       <h2 class="text-3xl font-bold text-white mb-2">Welcome back, {{ user?.email }}!</h2>

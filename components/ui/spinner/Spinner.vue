@@ -21,7 +21,7 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  default: 'border-gray-300 dark:border-gray-600',
+  default: 'border-muted-300 dark:border-muted-600',
   primary: 'border-white',
   secondary: 'border-secondary-foreground',
   destructive: 'border-destructive',
@@ -36,7 +36,7 @@ const variantClasses = {
         'animate-spin rounded-full border-3 border-transparent',
         sizeClasses[size],
         variantClasses[variant],
-        'border-t-orange-400',
+        'border-t-brand-400',
         props.class
       )
     "

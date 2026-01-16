@@ -1,6 +1,6 @@
 <template lang="">
   <!-- My Games -->
-  <Card class="bg-gray-800/50 backdrop-blur-sm rounded-xl gap-4 border border-gray-700">
+  <Card class="bg-muted-800/50 backdrop-blur-sm rounded-xl gap-4 border border-muted-700">
     <!-- Header -->
     <CardHeader class="flex items-center justify-between text-white">
       <CardTitle>My Games</CardTitle>
@@ -20,7 +20,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="games.length === 0" class="text-center py-8 text-gray-400">
+      <div v-else-if="games.length === 0" class="text-center py-8 text-muted-400">
         <p>No games found. Create your first game!</p>
       </div>
 
@@ -29,13 +29,13 @@
         v-else
         v-for="game in games"
         :key="game.id"
-        class="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/50 transition-colors cursor-pointer"
+        class="flex items-center gap-3 p-3 bg-muted-700/30 rounded-lg hover:bg-muted-700/50 transition-colors cursor-pointer"
         @click="aiStore.setSelectedGame(game.id)"
-        :class="selectedGame === game.id ? 'ring-2 ring-orange-300' : ''"
+        :class="selectedGame === game.id ? 'ring-2 ring-brand-400' : ''"
       >
         <div class="flex-1 min-w-0">
           <p class="font-medium text-white truncate">{{ game.name }}</p>
-          <p class="text-xs text-gray-400">Game</p>
+          <p class="text-xs text-muted-400">Game</p>
         </div>
       </div>
     </CardContent>

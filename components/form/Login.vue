@@ -2,7 +2,7 @@
   <!-- Auth Forms -->
   <div
     v-if="!user"
-    class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 h-full flex flex-col justify-center items-center"
+    class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 h-full flex flex-col justify-center items-center w-full mt-12 mb-24 max-[700px]:mb-12"
   >
     <Tabs v-model="activeTab" class="w-full">
       <!-- tabs list -->
@@ -145,8 +145,16 @@ const loading = computed(() => authStore.loading);
 const message = computed(() => authStore.message);
 const messageType = computed(() => authStore.messageType);
 
+// Props
+const props = defineProps({
+  defaultTab: {
+    type: String,
+    default: 'login',
+  },
+});
+
 // Local reactive data
-const activeTab = ref('login');
+const activeTab = ref(props.defaultTab);
 const loginForm = reactive({
   email: '',
   password: '',
