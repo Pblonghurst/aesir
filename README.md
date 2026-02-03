@@ -2,7 +2,7 @@
 
 To use the demo below you will need to sign up and confirm your email. Confirmation Email may arrive in spam/junk.
 
-# **🎮 [Live Demo](https://aesir-two.vercel.app/)**
+# **🎮 [Live Demo]([https://aesir-two.vercel.app/](https://aesir-pblonghursts-projects.vercel.app/))**
 
 Aesir is an AI-powered application that helps you master complex game rules. Upload rulesets, manuals, or documentation and chat with AI to get instant, accurate clarifications and examples.
 
